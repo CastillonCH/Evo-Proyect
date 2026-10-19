@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 //
 using ENTIDADES;
+using NEGOCIO;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace DATOS
 {
-    public class DATOS_PEDIDO
+    public class DATOS_PEDIDO : IPedidoRepositorio
     {
         public void Agregar_Pedido(ENTIDADES_PEDIDO pedido)
         {
@@ -20,7 +21,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -37,7 +38,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al agregar el pedido: " + ex.Message);
+                throw new Exception("Error al agregar el pedido: " + ex.Message, ex);
             }
         }
 
@@ -48,7 +49,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -66,7 +67,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar el pedido: " + ex.Message); // Manejo de errores
+                throw new Exception("Error al modificar el pedido: " + ex.Message, ex); // Manejo de errores
             }
         }
 
@@ -76,7 +77,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -90,7 +91,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar el pedido: " + ex.Message); // Manejo de errores
+                throw new Exception("Error al eliminar el pedido: " + ex.Message, ex); // Manejo de errores
             }
         }
 
@@ -101,7 +102,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -117,7 +118,7 @@ namespace DATOS
             catch (Exception ex)
             {
                 // Capturamos cualquier excepción y lanzamos un error con un mensaje descriptivo
-                throw new Exception("Error al cargar los pedidos: " + ex.Message);
+                throw new Exception("Error al cargar los pedidos: " + ex.Message, ex);
             }
         }
         public DataTable Cargar_Cliente()
@@ -126,7 +127,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -141,7 +142,69 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los clientes: " + ex.Message);
+                throw new Exception("Error al cargar los clientes: " + ex.Message, ex);
+            }
+        }
+
+        // Pedidos del día de una sede para la pantalla de Cocina (SP en 02_cambios_spyci.sql)
+        public List<ENTIDAD_PEDIDO_COCINA> Cargar_Pedidos_Cocina(string idSede, DateTime fecha)
+        {
+            try
+            {
+                List<ENTIDAD_PEDIDO_COCINA> pedidos = new List<ENTIDAD_PEDIDO_COCINA>();
+                using (SqlConnection connection = CONEXION.Crear())
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_Pedidos_Cocina", connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ID_Sede", idSede);
+                        cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
+                        connection.Open();
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                pedidos.Add(new ENTIDAD_PEDIDO_COCINA
+                                {
+                                    ID_Pedido = dr["ID_Pedido"].ToString(),
+                                    Fec_Pedido = Convert.ToDateTime(dr["Fec_Pedido"]),
+                                    Estado_Pedido = dr["Estado_Pedido"].ToString(),
+                                    Tipo_Pedido = dr["Tipo_Pedido"].ToString(),
+                                    Cliente = dr["Cliente"].ToString(),
+                                    Observaciones = dr["Observaciones"].ToString(),
+                                    Detalle = dr["Detalle"].ToString()
+                                });
+                            }
+                        }
+                    }
+                }
+                return pedidos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los pedidos de cocina: " + ex.Message, ex);
+            }
+        }
+
+        public void Cambiar_Estado(string idPedido, string nuevoEstado)
+        {
+            try
+            {
+                using (SqlConnection connection = CONEXION.Crear())
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_Cambiar_Estado_Pedido", connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ID_Pedido", idPedido);
+                        cmd.Parameters.AddWithValue("@Estado", nuevoEstado);
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cambiar el estado del pedido: " + ex.Message, ex);
             }
         }
     }

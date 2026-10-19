@@ -64,6 +64,7 @@
     <Compile Include="Empleado.Designer.cs">
       <DependentUpon>Empleado.cs</DependentUpon>
     </Compile>
+    <Compile Include="FabricaServicios.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +183,10 @@
     <ProjectReference Include="DATOS\DATOS.csproj">
       <Project>{81169614-4e51-43ab-a68e-b36e5cd40fd0}</Project>
       <Name>DATOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="NEGOCIO\NEGOCIO.csproj">
+      <Project>{64a89c65-1770-4bdf-9646-d52e5e88e1a1}</Project>
+      <Name>NEGOCIO</Name>
     </ProjectReference>
     <ProjectReference Include="ENTIDADES\ENTIDADES.csproj">
       <Project>{6bb21d9c-66a9-49bb-83c4-345384b5eb77}</Project>

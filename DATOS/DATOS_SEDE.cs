@@ -19,7 +19,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -39,7 +39,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al agregar sede: " + ex.Message);
+                throw new Exception("Error al agregar sede: " + ex.Message, ex);
             }
         }
 
@@ -49,7 +49,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -64,7 +64,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los datos de las sedes: " + ex.Message);
+                throw new Exception("Error al cargar los datos de las sedes: " + ex.Message, ex);
             }
         }
 
@@ -74,7 +74,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -87,7 +87,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar sede: " + ex.Message);
+                throw new Exception("Error al eliminar sede: " + ex.Message, ex);
             }
         }
 
@@ -98,7 +98,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -116,7 +116,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar sede: " + ex.Message);
+                throw new Exception("Error al modificar sede: " + ex.Message, ex);
             }
         }
     }

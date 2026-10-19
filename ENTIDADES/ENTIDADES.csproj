@@ -52,6 +52,16 @@
     <Compile Include="ENTIDAD_ROL.cs" />
     <Compile Include="ENTIDAD_SEDE.cs" />
     <Compile Include="ENTIDAD_VENTA.cs" />
+    <Compile Include="ENTIDAD_ABASTECIMIENTO.cs" />
+    <Compile Include="ENTIDAD_CONSUMO_INSUMO.cs" />
+    <Compile Include="ENTIDAD_LINEA_PEDIDO.cs" />
+    <Compile Include="ENTIDAD_PEDIDO_CAJA.cs" />
+    <Compile Include="ENTIDAD_PEDIDO_COCINA.cs" />
+    <Compile Include="ENTIDAD_PRODUCTO_CAJA.cs" />
+    <Compile Include="ENTIDAD_RECETA_INSUMO.cs" />
+    <Compile Include="ENTIDAD_RESULTADO_VENTA.cs" />
+    <Compile Include="ENTIDAD_RESUMEN_PEDIDO.cs" />
+    <Compile Include="ENTIDAD_USUARIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

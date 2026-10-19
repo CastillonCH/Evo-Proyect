@@ -19,7 +19,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -39,7 +39,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al agregar el detalle de pedido: " + ex.Message);
+                throw new Exception("Error al agregar el detalle de pedido: " + ex.Message, ex);
             }
         }
 
@@ -50,7 +50,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -70,7 +70,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar el detalle de pedido: " + ex.Message);
+                throw new Exception("Error al modificar el detalle de pedido: " + ex.Message, ex);
             }
         }
 
@@ -81,7 +81,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -97,7 +97,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar el detalle de pedido: " + ex.Message);
+                throw new Exception("Error al eliminar el detalle de pedido: " + ex.Message, ex);
             }
         }
 
@@ -108,7 +108,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -131,7 +131,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los detalles del pedido: " + ex.Message);
+                throw new Exception("Error al cargar los detalles del pedido: " + ex.Message, ex);
             }
         }
 
@@ -142,7 +142,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -159,7 +159,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los platos: " + ex.Message);
+                throw new Exception("Error al cargar los platos: " + ex.Message, ex);
             }
         }
 
@@ -170,7 +170,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -187,7 +187,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los pedidos: " + ex.Message);
+                throw new Exception("Error al cargar los pedidos: " + ex.Message, ex);
             }
         }
     }

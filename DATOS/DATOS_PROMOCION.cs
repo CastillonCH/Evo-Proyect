@@ -18,7 +18,7 @@ namespace DATOS
                            "VALUES (@ID_Promocion, @Nom_Promocion, @Fec_Inicio, @Fec_Fin, @Descuento)";
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -35,7 +35,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al agregar la promoción: " + ex.Message);
+                throw new Exception("Error al agregar la promoción: " + ex.Message, ex);
             }
         }
 
@@ -44,7 +44,7 @@ namespace DATOS
             string query = "UPDATE Promocion SET Nom_Promocion = @Nom_Promocion, Fec_Inicio = @Fec_Inicio, Fec_Fin = @Fec_Fin, Descuento = @Descuento WHERE ID_Promocion = @ID_Promocion";
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -61,7 +61,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar la promoción: " + ex.Message);
+                throw new Exception("Error al modificar la promoción: " + ex.Message, ex);
             }
         }
 
@@ -70,7 +70,7 @@ namespace DATOS
             string query = "DELETE FROM Promocion WHERE ID_Promocion = @ID_Promocion";
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -83,7 +83,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar la promoción: " + ex.Message);
+                throw new Exception("Error al eliminar la promoción: " + ex.Message, ex);
             }
         }
 
@@ -92,7 +92,7 @@ namespace DATOS
             string query = "SELECT ID_Promocion, Nom_Promocion, Fec_Inicio, Fec_Fin, Descuento FROM Promocion";
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -107,7 +107,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar las promociones: " + ex.Message);
+                throw new Exception("Error al cargar las promociones: " + ex.Message, ex);
             }
         }
     }

@@ -12,9 +12,12 @@ namespace RESTAURANTEFINAL
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        private readonly FabricaServicios _fabrica;
+
+        public Form1(FabricaServicios fabrica)
         {
             InitializeComponent();
+            _fabrica = fabrica;
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -19,7 +19,7 @@ namespace DATOS
                            "VALUES (@ID_Rol, @ID_Departamento, @Nom_Rol, @Salario)";
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -36,12 +36,12 @@ namespace DATOS
             catch (SqlException ex)
             {
                 // Manejo más específico de errores de SQL
-                throw new Exception("Error al agregar el rol en la base de datos: " + ex.Message);
+                throw new Exception("Error al agregar el rol en la base de datos: " + ex.Message, ex);
             }
             catch (Exception ex)
             {
                 // Manejo de errores generales
-                throw new Exception("Error inesperado al agregar el rol: " + ex.Message);
+                throw new Exception("Error inesperado al agregar el rol: " + ex.Message, ex);
             }
         }
 
@@ -52,7 +52,7 @@ namespace DATOS
                            "Salario = @Salario WHERE ID_Rol = @ID_Rol";
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -69,7 +69,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar el rol: " + ex.Message);
+                throw new Exception("Error al modificar el rol: " + ex.Message, ex);
             }
         }
 
@@ -79,7 +79,7 @@ namespace DATOS
             string query = "DELETE FROM Rol WHERE ID_Rol = @ID_Rol";
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -92,7 +92,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar el rol: " + ex.Message);
+                throw new Exception("Error al eliminar el rol: " + ex.Message, ex);
             }
         }
 
@@ -102,7 +102,7 @@ namespace DATOS
             string query = "SELECT ID_Rol, ID_Departamento, Nom_Rol, Salario FROM Rol";
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -117,7 +117,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los roles: " + ex.Message);
+                throw new Exception("Error al cargar los roles: " + ex.Message, ex);
             }
         }
 
@@ -127,7 +127,7 @@ namespace DATOS
             string query = "SELECT ID_Departamento, Nom_Departamento FROM Departamento";
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -142,7 +142,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los departamentos: " + ex.Message);
+                throw new Exception("Error al cargar los departamentos: " + ex.Message, ex);
             }
         }
     }

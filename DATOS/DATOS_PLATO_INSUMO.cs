@@ -20,7 +20,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -36,7 +36,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al agregar el plato-insumo: " + ex.Message);
+                throw new Exception("Error al agregar el plato-insumo: " + ex.Message, ex);
             }
         }
 
@@ -48,7 +48,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -64,7 +64,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar el plato-insumo: " + ex.Message);
+                throw new Exception("Error al modificar el plato-insumo: " + ex.Message, ex);
             }
         }
 
@@ -75,7 +75,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -89,7 +89,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar el plato-insumo: " + ex.Message);
+                throw new Exception("Error al eliminar el plato-insumo: " + ex.Message, ex);
             }
         }
 
@@ -100,7 +100,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -115,7 +115,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los platos-insumos: " + ex.Message);
+                throw new Exception("Error al cargar los platos-insumos: " + ex.Message, ex);
             }
         }
         // Método para cargar los platos desde la base de datos
@@ -125,7 +125,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -140,7 +140,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los platos: " + ex.Message);
+                throw new Exception("Error al cargar los platos: " + ex.Message, ex);
             }
         }
 
@@ -151,7 +151,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -166,7 +166,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los insumos: " + ex.Message);
+                throw new Exception("Error al cargar los insumos: " + ex.Message, ex);
             }
         }
     }

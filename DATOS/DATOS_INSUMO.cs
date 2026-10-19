@@ -17,7 +17,7 @@ namespace DATOS
             string query = "Agregar_Insumo";  // Procedimiento almacenado Agregar_Insumo
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -35,7 +35,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al agregar el insumo: " + ex.Message);
+                throw new Exception("Error al agregar el insumo: " + ex.Message, ex);
             }
         }
 
@@ -44,7 +44,7 @@ namespace DATOS
             string query = "Modificar_Insumo";  // Procedimiento almacenado Modificar_Insumo
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -62,7 +62,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar el insumo: " + ex.Message);
+                throw new Exception("Error al modificar el insumo: " + ex.Message, ex);
             }
         }
 
@@ -71,7 +71,7 @@ namespace DATOS
             string query = "Eliminar_Insumo";  // Procedimiento almacenado Eliminar_Insumo
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -85,7 +85,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar el insumo: " + ex.Message);
+                throw new Exception("Error al eliminar el insumo: " + ex.Message, ex);
             }
         }
 
@@ -94,7 +94,7 @@ namespace DATOS
             string query = "Cargar_Insumos";  // Procedimiento almacenado Cargar_Insumos
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -110,7 +110,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los insumos: " + ex.Message);
+                throw new Exception("Error al cargar los insumos: " + ex.Message, ex);
             }
         }
 
@@ -120,7 +120,7 @@ namespace DATOS
             string query = "cargar_unidad_medida";  // Procedimiento almacenado Cargar_Unidad_Medida
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -136,7 +136,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar las unidades de medida: " + ex.Message);
+                throw new Exception("Error al cargar las unidades de medida: " + ex.Message, ex);
             }
         }
 
@@ -145,7 +145,7 @@ namespace DATOS
             string query = "cargar_clasificacion";  // Procedimiento almacenado Cargar_Clasificacion
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -161,7 +161,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar las clasificaciones: " + ex.Message);
+                throw new Exception("Error al cargar las clasificaciones: " + ex.Message, ex);
             }
         }
 

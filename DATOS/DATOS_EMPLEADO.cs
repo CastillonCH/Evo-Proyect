@@ -18,7 +18,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -40,7 +40,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al agregar el empleado: " + ex.Message);
+                throw new Exception("Error al agregar el empleado: " + ex.Message, ex);
             }
         }
 
@@ -50,7 +50,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -72,7 +72,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar el empleado: " + ex.Message);
+                throw new Exception("Error al modificar el empleado: " + ex.Message, ex);
             }
         }
 
@@ -82,7 +82,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -98,7 +98,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar el empleado: " + ex.Message);
+                throw new Exception("Error al eliminar el empleado: " + ex.Message, ex);
             }
         }
 
@@ -108,7 +108,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -125,7 +125,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los empleados: " + ex.Message);
+                throw new Exception("Error al cargar los empleados: " + ex.Message, ex);
             }
         }
         public DataTable Cargar_Roles()
@@ -134,7 +134,7 @@ namespace DATOS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -151,7 +151,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los roles: " + ex.Message);
+                throw new Exception("Error al cargar los roles: " + ex.Message, ex);
             }
         }
 

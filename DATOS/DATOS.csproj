@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,12 +47,15 @@
     <Compile Include="DATOS_DETALLE_PEDIDO.cs" />
     <Compile Include="DATOS_EMPLEADO.cs" />
     <Compile Include="DATOS_INSUMO.cs" />
+    <Compile Include="DATOS_INVENTARIO.cs" />
     <Compile Include="DATOS_PEDIDO.cs" />
     <Compile Include="DATOS_PLATO.cs" />
     <Compile Include="DATOS_PLATO_INSUMO.cs" />
     <Compile Include="DATOS_PROMOCION.cs" />
+    <Compile Include="DATOS_REPORTE.cs" />
     <Compile Include="DATOS_ROL.cs" />
     <Compile Include="DATOS_SEDE.cs" />
+    <Compile Include="DATOS_USUARIO.cs" />
     <Compile Include="DATOS_VENTA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +63,10 @@
     <ProjectReference Include="..\ENTIDADES\ENTIDADES.csproj">
       <Project>{6bb21d9c-66a9-49bb-83c4-345384b5eb77}</Project>
       <Name>ENTIDADES</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NEGOCIO\NEGOCIO.csproj">
+      <Project>{64a89c65-1770-4bdf-9646-d52e5e88e1a1}</Project>
+      <Name>NEGOCIO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

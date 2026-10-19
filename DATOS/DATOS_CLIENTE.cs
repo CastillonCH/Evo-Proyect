@@ -5,18 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 //
 using ENTIDADES;
+using NEGOCIO;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace DATOS
 {
-    public class DATOS_CLIENTE
+    public class DATOS_CLIENTE : IClienteRepositorio
     {
         public void Agregar_Cliente(ENTIDAD_CLIENTE cliente)
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand("Agregar_Cliente", connection))
                     {
@@ -36,7 +37,7 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al agregar cliente: " + ex.Message);
+                throw new Exception("Error al agregar cliente: " + ex.Message, ex);
             }
         }
 
@@ -44,7 +45,7 @@ namespace DATOS
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand("Cargar_Clientes", connection))
                     {
@@ -63,14 +64,14 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al cargar los datos de clientes: " + ex.Message);
+                throw new Exception("Error al cargar los datos de clientes: " + ex.Message, ex);
             }
         }
         public void Eliminar_Cliente(string idCliente)
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand("Eliminar_Cliente", connection))
                     {
@@ -87,14 +88,14 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar cliente: " + ex.Message);
+                throw new Exception("Error al eliminar cliente: " + ex.Message, ex);
             }
         }
         public void Modificar_Cliente(ENTIDAD_CLIENTE cliente)
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(CONEXION.cn.ConnectionString))
+                using (SqlConnection connection = CONEXION.Crear())
                 {
                     using (SqlCommand cmd = new SqlCommand("Modificar_Cliente", connection))
                     {
@@ -116,7 +117,47 @@ namespace DATOS
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar cliente: " + ex.Message);
+                throw new Exception("Error al modificar cliente: " + ex.Message, ex);
+            }
+        }
+
+        // Último código con formato C0000 (para generar el siguiente)
+        public string Ultimo_Codigo()
+        {
+            try
+            {
+                using (SqlConnection connection = CONEXION.Crear())
+                {
+                    connection.Open();
+                    return CONEXION.Ultimo_Codigo(connection, null, "Cliente", "ID_Cliente", "C", 4);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener el último código de cliente: " + ex.Message, ex);
+            }
+        }
+
+        // Número de compras (ventas) del cliente, para el descuento de cliente frecuente
+        public int Contar_Compras(string idCliente)
+        {
+            string query = "SELECT COUNT(*) FROM Venta v INNER JOIN Pedido p ON v.ID_Pedido = p.ID_Pedido " +
+                           "WHERE p.ID_Cliente = @ID_Cliente";
+            try
+            {
+                using (SqlConnection connection = CONEXION.Crear())
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@ID_Cliente", idCliente);
+                        connection.Open();
+                        return (int)cmd.ExecuteScalar();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al contar las compras del cliente: " + ex.Message, ex);
             }
         }
     }
