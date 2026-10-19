@@ -10,7 +10,7 @@ namespace ENTIDADES
     {
         public string ID_Plato {  get; set; }
         public string ID_Insumo { get; set; }
-        public string Cant_Necesaria { get; set; }
+        public decimal Cant_Necesaria { get; set; }
         public string Procedimiento { get; set; }
     }
 }

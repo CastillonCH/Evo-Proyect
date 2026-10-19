@@ -28,7 +28,7 @@ namespace RESTAURANTEFINAL
                     {
                         ID_Plato = cbx_plato_cod.SelectedValue.ToString(),  // Obtener el valor seleccionado
                         ID_Insumo = cbx_insumo_cod.SelectedValue.ToString(), // Obtener el valor seleccionado
-                        Cant_Necesaria = txt_plato_insumo_cant.Text.Trim(),
+                        Cant_Necesaria = LeerCantidad(),  // en la unidad del insumo (ej. 0.25 kg)
                         Procedimiento = txt_plato_insumo_proc.Text.Trim()
                     };
 
@@ -82,7 +82,7 @@ namespace RESTAURANTEFINAL
             string filtro = txt_plato_insumo_buscar.Text.ToLower();
 
             (dataGridView_Plato_Insumo.DataSource as DataTable).DefaultView.RowFilter = string.Format(
-                "ID_Plato LIKE '%{0}%' OR ID_Insumo LIKE '%{0}%' OR Cant_Necesaria LIKE '%{0}%' OR Procedimiento LIKE '%{0}%'",
+                "ID_Plato LIKE '%{0}%' OR ID_Insumo LIKE '%{0}%' OR Procedimiento LIKE '%{0}%'",
                 filtro);
         }
 
@@ -114,8 +114,22 @@ namespace RESTAURANTEFINAL
         // Función para validar que todos los campos están llenos
         private bool ValidarCampos()
         {
-            return !string.IsNullOrEmpty(txt_plato_insumo_cant.Text) && !string.IsNullOrEmpty(txt_plato_insumo_proc.Text) &&
+            if (LeerCantidad() <= 0)
+            {
+                MessageBox.Show("Ingrese una cantidad numérica mayor a cero (ej. 0.25).", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return !string.IsNullOrEmpty(txt_plato_insumo_proc.Text) &&
                    cbx_plato_cod.SelectedIndex != -1 && cbx_insumo_cod.SelectedIndex != -1;
+        }
+
+        // Acepta punto o coma decimal; devuelve 0 si el texto no es un número
+        private decimal LeerCantidad()
+        {
+            decimal cantidad;
+            string texto = txt_plato_insumo_cant.Text.Trim().Replace(',', '.');
+            return decimal.TryParse(texto, System.Globalization.NumberStyles.Number,
+                                    System.Globalization.CultureInfo.InvariantCulture, out cantidad) ? cantidad : 0m;
         }
 
         // Función para limpiar los campos del formulario
