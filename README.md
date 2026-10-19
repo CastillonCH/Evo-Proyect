@@ -37,6 +37,14 @@ Requisitos: SQL Server 2019/2022 (Express sirve) y SQL Server Management Studio 
 
 Para **reiniciar la demo**, ejecuta otra vez los dos scripts. El primero recrea la BD.
 
+**Prueba opcional:** `database/prueba_flujo_venta.sql` simula una venta completa y verifica cada paso:
+- venta, detalle y comprobante;
+- pedido en cocina y avance de estados;
+- stock descontado según la receta;
+- KPIs.
+
+Termina con `ROLLBACK`, así que no deja datos. Si todo está bien, muestra **"PRUEBA OK"**.
+
 ## 2. Configurar el servidor
 
 En **`App.config`** cambia `[NOMBRE_SERVIDOR]` por tu instancia:
