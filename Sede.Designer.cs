@@ -34,6 +34,7 @@
             this.btn_sede_eliminar = new System.Windows.Forms.Button();
             this.dataGridView_sede = new System.Windows.Forms.DataGridView();
             this.btn_sede_guardar = new System.Windows.Forms.Button();
+            this.btn_sede_nuevo = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dateTimePicker_cierre = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker_apertura = new System.Windows.Forms.DateTimePicker();
@@ -61,7 +62,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 17);
             this.label1.TabIndex = 33;
-            this.label1.Text = "Nombre:";
+            this.label1.Text = "Buscar:";
             // 
             // txt_sede_buscar
             // 
@@ -74,7 +75,7 @@
             // 
             // btn_sede_eliminar
             // 
-            this.btn_sede_eliminar.Location = new System.Drawing.Point(207, 350);
+            this.btn_sede_eliminar.Location = new System.Drawing.Point(244, 350);
             this.btn_sede_eliminar.Margin = new System.Windows.Forms.Padding(4);
             this.btn_sede_eliminar.Name = "btn_sede_eliminar";
             this.btn_sede_eliminar.Size = new System.Drawing.Size(100, 30);
@@ -94,9 +95,19 @@
             this.dataGridView_sede.TabIndex = 30;
             this.dataGridView_sede.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_sede_CellClick);
             // 
+            // btn_sede_nuevo
+            // 
+            this.btn_sede_nuevo.Location = new System.Drawing.Point(24, 350);
+            this.btn_sede_nuevo.Name = "btn_sede_nuevo";
+            this.btn_sede_nuevo.Size = new System.Drawing.Size(100, 30);
+            this.btn_sede_nuevo.TabIndex = 20;
+            this.btn_sede_nuevo.Text = "Nuevo";
+            this.btn_sede_nuevo.UseVisualStyleBackColor = true;
+            this.btn_sede_nuevo.Click += new System.EventHandler(this.btn_sede_nuevo_Click);
+            // 
             // btn_sede_guardar
             // 
-            this.btn_sede_guardar.Location = new System.Drawing.Point(59, 350);
+            this.btn_sede_guardar.Location = new System.Drawing.Point(134, 350);
             this.btn_sede_guardar.Margin = new System.Windows.Forms.Padding(4);
             this.btn_sede_guardar.Name = "btn_sede_guardar";
             this.btn_sede_guardar.Size = new System.Drawing.Size(100, 30);
@@ -112,6 +123,7 @@
             this.groupBox1.Controls.Add(this.btn_sede_eliminar);
             this.groupBox1.Controls.Add(this.txt_sede_cod);
             this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.btn_sede_nuevo);
             this.groupBox1.Controls.Add(this.btn_sede_guardar);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label3);
@@ -153,6 +165,7 @@
             this.txt_sede_cod.Location = new System.Drawing.Point(175, 37);
             this.txt_sede_cod.Margin = new System.Windows.Forms.Padding(4);
             this.txt_sede_cod.Name = "txt_sede_cod";
+            this.txt_sede_cod.ReadOnly = true;
             this.txt_sede_cod.Size = new System.Drawing.Size(132, 23);
             this.txt_sede_cod.TabIndex = 13;
             // 
@@ -281,6 +294,7 @@
         private System.Windows.Forms.Button btn_sede_eliminar;
         private System.Windows.Forms.DataGridView dataGridView_sede;
         private System.Windows.Forms.Button btn_sede_guardar;
+        private System.Windows.Forms.Button btn_sede_nuevo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txt_sede_cod;
         private System.Windows.Forms.Label label2;

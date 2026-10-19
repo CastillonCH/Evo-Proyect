@@ -43,6 +43,7 @@
             this.btn_rol_eliminar = new System.Windows.Forms.Button();
             this.dataGridView_Rol = new System.Windows.Forms.DataGridView();
             this.btn_rol_guardar = new System.Windows.Forms.Button();
+            this.btn_rol_nuevo = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Rol)).BeginInit();
@@ -51,6 +52,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_rol_nuevo);
             this.groupBox1.Controls.Add(this.btn_rol_guardar);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btn_rol_eliminar);
@@ -94,6 +96,7 @@
             this.txt_rol_cod.Location = new System.Drawing.Point(191, 40);
             this.txt_rol_cod.Margin = new System.Windows.Forms.Padding(4);
             this.txt_rol_cod.Name = "txt_rol_cod";
+            this.txt_rol_cod.ReadOnly = true;
             this.txt_rol_cod.Size = new System.Drawing.Size(132, 23);
             this.txt_rol_cod.TabIndex = 13;
             // 
@@ -151,7 +154,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 17);
             this.label6.TabIndex = 35;
-            this.label6.Text = "Nombre:";
+            this.label6.Text = "Buscar:";
             // 
             // txt_rol_buscar
             // 
@@ -164,7 +167,7 @@
             // 
             // btn_rol_eliminar
             // 
-            this.btn_rol_eliminar.Location = new System.Drawing.Point(191, 270);
+            this.btn_rol_eliminar.Location = new System.Drawing.Point(237, 270);
             this.btn_rol_eliminar.Margin = new System.Windows.Forms.Padding(4);
             this.btn_rol_eliminar.Name = "btn_rol_eliminar";
             this.btn_rol_eliminar.Size = new System.Drawing.Size(100, 30);
@@ -184,9 +187,19 @@
             this.dataGridView_Rol.TabIndex = 32;
             this.dataGridView_Rol.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Rol_CellClick);
             // 
+            // btn_rol_nuevo
+            // 
+            this.btn_rol_nuevo.Location = new System.Drawing.Point(17, 270);
+            this.btn_rol_nuevo.Name = "btn_rol_nuevo";
+            this.btn_rol_nuevo.Size = new System.Drawing.Size(100, 30);
+            this.btn_rol_nuevo.TabIndex = 20;
+            this.btn_rol_nuevo.Text = "Nuevo";
+            this.btn_rol_nuevo.UseVisualStyleBackColor = true;
+            this.btn_rol_nuevo.Click += new System.EventHandler(this.btn_rol_nuevo_Click);
+            // 
             // btn_rol_guardar
             // 
-            this.btn_rol_guardar.Location = new System.Drawing.Point(55, 270);
+            this.btn_rol_guardar.Location = new System.Drawing.Point(127, 270);
             this.btn_rol_guardar.Margin = new System.Windows.Forms.Padding(4);
             this.btn_rol_guardar.Name = "btn_rol_guardar";
             this.btn_rol_guardar.Size = new System.Drawing.Size(100, 30);
@@ -245,6 +258,7 @@
         private System.Windows.Forms.Button btn_rol_eliminar;
         private System.Windows.Forms.DataGridView dataGridView_Rol;
         private System.Windows.Forms.Button btn_rol_guardar;
+        private System.Windows.Forms.Button btn_rol_nuevo;
         private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

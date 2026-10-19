@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Plato));
             this.btn_plato_guardar = new System.Windows.Forms.Button();
+            this.btn_plato_nuevo = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbx_promocion_cod = new System.Windows.Forms.ComboBox();
@@ -51,9 +52,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
+            // btn_plato_nuevo
+            // 
+            this.btn_plato_nuevo.Location = new System.Drawing.Point(24, 326);
+            this.btn_plato_nuevo.Name = "btn_plato_nuevo";
+            this.btn_plato_nuevo.Size = new System.Drawing.Size(100, 28);
+            this.btn_plato_nuevo.TabIndex = 20;
+            this.btn_plato_nuevo.Text = "Nuevo";
+            this.btn_plato_nuevo.UseVisualStyleBackColor = true;
+            this.btn_plato_nuevo.Click += new System.EventHandler(this.btn_plato_nuevo_Click);
+            // 
             // btn_plato_guardar
             // 
-            this.btn_plato_guardar.Location = new System.Drawing.Point(65, 326);
+            this.btn_plato_guardar.Location = new System.Drawing.Point(134, 326);
             this.btn_plato_guardar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_plato_guardar.Name = "btn_plato_guardar";
             this.btn_plato_guardar.Size = new System.Drawing.Size(100, 28);
@@ -69,6 +80,7 @@
             this.groupBox1.Controls.Add(this.btn_plato_eliminar);
             this.groupBox1.Controls.Add(this.txt_plato_cod);
             this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.btn_plato_nuevo);
             this.groupBox1.Controls.Add(this.btn_plato_guardar);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label3);
@@ -103,13 +115,13 @@
             this.cbx_promocion_cod.Name = "cbx_promocion_cod";
             this.cbx_promocion_cod.Size = new System.Drawing.Size(127, 24);
             this.cbx_promocion_cod.TabIndex = 24;
-            this.cbx_promocion_cod.SelectedIndexChanged += new System.EventHandler(this.cbx_promocion_cod_SelectedIndexChanged);
             // 
             // txt_plato_cod
             // 
             this.txt_plato_cod.Location = new System.Drawing.Point(191, 38);
             this.txt_plato_cod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txt_plato_cod.Name = "txt_plato_cod";
+            this.txt_plato_cod.ReadOnly = true;
             this.txt_plato_cod.Size = new System.Drawing.Size(132, 22);
             this.txt_plato_cod.TabIndex = 13;
             // 
@@ -187,7 +199,6 @@
             this.dataGridView_Plato.Size = new System.Drawing.Size(467, 383);
             this.dataGridView_Plato.TabIndex = 26;
             this.dataGridView_Plato.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Plato_CellClick);
-            this.dataGridView_Plato.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Plato_CellContentClick);
             // 
             // label6
             // 
@@ -197,7 +208,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(59, 16);
             this.label6.TabIndex = 31;
-            this.label6.Text = "Nombre:";
+            this.label6.Text = "Buscar:";
             // 
             // txt_plato_buscar
             // 
@@ -210,7 +221,7 @@
             // 
             // btn_plato_eliminar
             // 
-            this.btn_plato_eliminar.Location = new System.Drawing.Point(191, 326);
+            this.btn_plato_eliminar.Location = new System.Drawing.Point(244, 326);
             this.btn_plato_eliminar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_plato_eliminar.Name = "btn_plato_eliminar";
             this.btn_plato_eliminar.Size = new System.Drawing.Size(100, 28);
@@ -255,6 +266,7 @@
         #endregion
 
         private System.Windows.Forms.Button btn_plato_guardar;
+        private System.Windows.Forms.Button btn_plato_nuevo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbx_promocion_cod;

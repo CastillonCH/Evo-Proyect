@@ -67,5 +67,17 @@ namespace RESTAURANTEFINAL.Properties
                 resourceCulture = value;
             }
         }
+
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap (logo de SPYC:I).
+        /// </summary>
+        internal static System.Drawing.Bitmap logo_spyci
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("logo_spyci", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

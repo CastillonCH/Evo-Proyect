@@ -1,4 +1,4 @@
-namespace NEGOCIO
+﻿namespace NEGOCIO
 {
     // SOLID: SRP – Su única responsabilidad es armar el siguiente código con el formato de la BD.
     // Ej.: Siguiente("C1000", "C", 4) = "C1001";  Siguiente("P01501", "P", 5) = "P01502"

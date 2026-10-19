@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\IVentaRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\CalculadoraPedido.cs" />
+    <Compile Include="Servicios\EstadosPedido.cs" />
     <Compile Include="Servicios\GeneradorCodigo.cs" />
     <Compile Include="Servicios\ServicioAutenticacion.cs" />
     <Compile Include="Servicios\ServicioInventario.cs" />

@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Insumo));
             this.btn_insumo_guardar = new System.Windows.Forms.Button();
+            this.btn_insumo_nuevo = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbx_insumo_clasi_cod = new System.Windows.Forms.ComboBox();
             this.cbx_insumo_uni_med_cod = new System.Windows.Forms.ComboBox();
@@ -51,9 +52,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
+            // btn_insumo_nuevo
+            // 
+            this.btn_insumo_nuevo.Location = new System.Drawing.Point(13, 332);
+            this.btn_insumo_nuevo.Name = "btn_insumo_nuevo";
+            this.btn_insumo_nuevo.Size = new System.Drawing.Size(100, 30);
+            this.btn_insumo_nuevo.TabIndex = 20;
+            this.btn_insumo_nuevo.Text = "Nuevo";
+            this.btn_insumo_nuevo.UseVisualStyleBackColor = true;
+            this.btn_insumo_nuevo.Click += new System.EventHandler(this.btn_insumo_nuevo_Click);
+            // 
             // btn_insumo_guardar
             // 
-            this.btn_insumo_guardar.Location = new System.Drawing.Point(78, 332);
+            this.btn_insumo_guardar.Location = new System.Drawing.Point(123, 332);
             this.btn_insumo_guardar.Margin = new System.Windows.Forms.Padding(4);
             this.btn_insumo_guardar.Name = "btn_insumo_guardar";
             this.btn_insumo_guardar.Size = new System.Drawing.Size(100, 30);
@@ -70,6 +81,7 @@
             this.groupBox1.Controls.Add(this.txt_insumo_nom);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.txt_insumo_cod);
+            this.groupBox1.Controls.Add(this.btn_insumo_nuevo);
             this.groupBox1.Controls.Add(this.btn_insumo_guardar);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label7);
@@ -83,8 +95,7 @@
             this.groupBox1.Size = new System.Drawing.Size(347, 384);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Datos de Pedido";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            this.groupBox1.Text = "Datos del Insumo";
             // 
             // cbx_insumo_clasi_cod
             // 
@@ -127,6 +138,7 @@
             this.txt_insumo_cod.Location = new System.Drawing.Point(191, 40);
             this.txt_insumo_cod.Margin = new System.Windows.Forms.Padding(4);
             this.txt_insumo_cod.Name = "txt_insumo_cod";
+            this.txt_insumo_cod.ReadOnly = true;
             this.txt_insumo_cod.Size = new System.Drawing.Size(132, 23);
             this.txt_insumo_cod.TabIndex = 13;
             // 
@@ -189,7 +201,7 @@
             // 
             // btn_insumo_eliminar
             // 
-            this.btn_insumo_eliminar.Location = new System.Drawing.Point(191, 332);
+            this.btn_insumo_eliminar.Location = new System.Drawing.Point(233, 332);
             this.btn_insumo_eliminar.Margin = new System.Windows.Forms.Padding(4);
             this.btn_insumo_eliminar.Name = "btn_insumo_eliminar";
             this.btn_insumo_eliminar.Size = new System.Drawing.Size(100, 30);
@@ -217,7 +229,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 17);
             this.label1.TabIndex = 37;
-            this.label1.Text = "Nombre:";
+            this.label1.Text = "Buscar:";
             // 
             // pictureBox1
             // 
@@ -256,6 +268,7 @@
         #endregion
 
         private System.Windows.Forms.Button btn_insumo_guardar;
+        private System.Windows.Forms.Button btn_insumo_nuevo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cbx_insumo_clasi_cod;
         private System.Windows.Forms.ComboBox cbx_insumo_uni_med_cod;

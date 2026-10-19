@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ENTIDADES;
 
 namespace NEGOCIO
@@ -7,6 +7,7 @@ namespace NEGOCIO
     public class Factura : IComprobante
     {
         public string Tipo { get { return "Factura"; } }
+        public bool Requiere_RUC { get { return true; } }
 
         public string Validar(ENTIDAD_PEDIDO_CAJA pedido)
         {

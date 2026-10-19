@@ -1,4 +1,4 @@
-namespace ENTIDADES
+﻿namespace ENTIDADES
 {
     // Una línea del carrito: producto + cantidad
     public class ENTIDAD_LINEA_PEDIDO

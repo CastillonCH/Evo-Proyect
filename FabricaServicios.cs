@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DATOS;
 using NEGOCIO;
 
@@ -25,6 +25,12 @@ namespace RESTAURANTEFINAL
                 new DescuentoPromocion(),
                 new DescuentoClienteFrecuente(10, 5m)   // 5 % desde la compra n.º 10
             };
+        }
+
+        // SOLID: OCP – un comprobante nuevo (ej. Nota de Venta) se agrega aquí sin tocar la Caja
+        public List<IComprobante> Comprobantes()
+        {
+            return new List<IComprobante> { new Boleta(), new Factura() };
         }
 
         public ServicioAutenticacion Crear_Servicio_Autenticacion()

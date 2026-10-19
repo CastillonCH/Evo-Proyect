@@ -59,7 +59,7 @@ namespace DATOS
                         cmd.Parameters.AddWithValue("@Nom_Plato", plato.Nom_Plato);
                         cmd.Parameters.AddWithValue("@Des_Plato", plato.Des_Plato);
                         cmd.Parameters.AddWithValue("@Prec_Original", plato.Prec_Original);
-                        cmd.Parameters.AddWithValue("@ID_Promocion", plato.ID_Promocion);
+                        cmd.Parameters.AddWithValue("@ID_Promocion", (object)plato.ID_Promocion ?? DBNull.Value);
 
                         connection.Open();
                         cmd.ExecuteNonQuery();

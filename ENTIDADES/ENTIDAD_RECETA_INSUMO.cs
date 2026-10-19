@@ -1,4 +1,4 @@
-namespace ENTIDADES
+﻿namespace ENTIDADES
 {
     // Un insumo de la receta de un plato (Plato_Insumo), en la unidad del insumo
     public class ENTIDAD_RECETA_INSUMO

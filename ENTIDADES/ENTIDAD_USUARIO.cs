@@ -1,4 +1,4 @@
-namespace ENTIDADES
+﻿namespace ENTIDADES
 {
     public class ENTIDAD_USUARIO
     {

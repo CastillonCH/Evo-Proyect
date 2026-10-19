@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Cliente));
             this.btn_cliente_guardar = new System.Windows.Forms.Button();
+            this.btn_cliente_nuevo = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txt_cliente_dir = new System.Windows.Forms.TextBox();
             this.txt_cliente_cod = new System.Windows.Forms.TextBox();
@@ -53,9 +54,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
+            // btn_cliente_nuevo
+            // 
+            this.btn_cliente_nuevo.Location = new System.Drawing.Point(22, 397);
+            this.btn_cliente_nuevo.Name = "btn_cliente_nuevo";
+            this.btn_cliente_nuevo.Size = new System.Drawing.Size(100, 30);
+            this.btn_cliente_nuevo.TabIndex = 20;
+            this.btn_cliente_nuevo.Text = "Nuevo";
+            this.btn_cliente_nuevo.UseVisualStyleBackColor = true;
+            this.btn_cliente_nuevo.Click += new System.EventHandler(this.btn_cliente_nuevo_Click);
+            // 
             // btn_cliente_guardar
             // 
-            this.btn_cliente_guardar.Location = new System.Drawing.Point(72, 397);
+            this.btn_cliente_guardar.Location = new System.Drawing.Point(132, 397);
             this.btn_cliente_guardar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_cliente_guardar.Name = "btn_cliente_guardar";
             this.btn_cliente_guardar.Size = new System.Drawing.Size(100, 30);
@@ -71,6 +82,7 @@
             this.groupBox1.Controls.Add(this.btn_cliente_eliminar);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.btn_cliente_nuevo);
             this.groupBox1.Controls.Add(this.btn_cliente_guardar);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txt_cliente_nom);
@@ -102,6 +114,7 @@
             this.txt_cliente_cod.Location = new System.Drawing.Point(191, 40);
             this.txt_cliente_cod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txt_cliente_cod.Name = "txt_cliente_cod";
+            this.txt_cliente_cod.ReadOnly = true;
             this.txt_cliente_cod.Size = new System.Drawing.Size(132, 23);
             this.txt_cliente_cod.TabIndex = 13;
             // 
@@ -207,7 +220,6 @@
             this.dataGridView_cliente.Size = new System.Drawing.Size(571, 358);
             this.dataGridView_cliente.TabIndex = 20;
             this.dataGridView_cliente.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_cliente_CellClick);
-            this.dataGridView_cliente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_cliente_CellContentClick);
             // 
             // label1
             // 
@@ -217,7 +229,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 17);
             this.label1.TabIndex = 27;
-            this.label1.Text = "Nombre:";
+            this.label1.Text = "Buscar (código, nombre, teléfono o email):";
             // 
             // txt_cliente_buscar
             // 
@@ -230,7 +242,7 @@
             // 
             // btn_cliente_eliminar
             // 
-            this.btn_cliente_eliminar.Location = new System.Drawing.Point(200, 397);
+            this.btn_cliente_eliminar.Location = new System.Drawing.Point(242, 397);
             this.btn_cliente_eliminar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_cliente_eliminar.Name = "btn_cliente_eliminar";
             this.btn_cliente_eliminar.Size = new System.Drawing.Size(100, 30);
@@ -276,6 +288,7 @@
         #endregion
 
         private System.Windows.Forms.Button btn_cliente_guardar;
+        private System.Windows.Forms.Button btn_cliente_nuevo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txt_cliente_dir;
         private System.Windows.Forms.TextBox txt_cliente_cod;

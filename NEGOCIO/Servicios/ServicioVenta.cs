@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -47,18 +47,23 @@ namespace NEGOCIO
             return _inventario.Insumos_Faltantes(pedido.ID_Sede, pedido.Lineas);
         }
 
-        public ENTIDAD_RESULTADO_VENTA Cobrar(ENTIDAD_PEDIDO_CAJA pedido, IComprobante comprobante)
+        // Devuelve el primer error del pedido o null si se puede cobrar
+        public string Validar(ENTIDAD_PEDIDO_CAJA pedido, IComprobante comprobante)
         {
             if (pedido.Lineas.Count == 0)
-                throw new InvalidOperationException("Agregue al menos un producto.");
+                return "Agregue al menos un producto.";
             if (string.IsNullOrEmpty(pedido.ID_Sede))
-                throw new InvalidOperationException("El usuario no tiene una sede asignada.");
+                return "El usuario no tiene una sede asignada.";
             if (string.IsNullOrEmpty(pedido.ID_Metodo_Pago))
-                throw new InvalidOperationException("Seleccione el método de pago.");
+                return "Seleccione el método de pago.";
             if (string.IsNullOrEmpty(pedido.Tipo_Pedido))
-                throw new InvalidOperationException("Seleccione el tipo de pedido.");
+                return "Seleccione el tipo de pedido.";
+            return comprobante.Validar(pedido);   // OCP: cada comprobante valida lo suyo
+        }
 
-            string error = comprobante.Validar(pedido);
+        public ENTIDAD_RESULTADO_VENTA Cobrar(ENTIDAD_PEDIDO_CAJA pedido, IComprobante comprobante)
+        {
+            string error = Validar(pedido, comprobante);
             if (error != null)
                 throw new InvalidOperationException(error);
 

@@ -187,10 +187,18 @@ IF NOT EXISTS (SELECT 1 FROM dbo.Proveedor WHERE ID_Proveedor = 'PR003')
 GO
 
 -- Cada sede debe tener fila de inventario para los insumos usados en recetas
+-- (stock inicial según la unidad: 20 kg/L, 2000 g/ml, 50 piezas/unidades)
 INSERT INTO dbo.Inventario (ID_Sede, ID_Insumo, Cant_Total, Stock_Minimo)
-SELECT s.ID_Sede, r.ID_Insumo, 50, 20
+SELECT s.ID_Sede, r.ID_Insumo,
+       CASE um.Nom_Unidad_Medida
+            WHEN 'Kilogramos' THEN 20 WHEN 'Litros' THEN 20
+            WHEN 'Gramos' THEN 2000 WHEN 'Mililitros' THEN 2000
+            ELSE 50 END,
+       20
 FROM dbo.Sede s
 CROSS JOIN (SELECT DISTINCT ID_Insumo FROM dbo.Plato_Insumo) r
+INNER JOIN dbo.Insumo i ON i.ID_Insumo = r.ID_Insumo
+LEFT JOIN dbo.Unidad_Medida um ON um.ID_Unidad_Medida = i.ID_Unidad_Medida
 WHERE NOT EXISTS (SELECT 1 FROM dbo.Inventario inv
                   WHERE inv.ID_Sede = s.ID_Sede AND inv.ID_Insumo = r.ID_Insumo);
 GO

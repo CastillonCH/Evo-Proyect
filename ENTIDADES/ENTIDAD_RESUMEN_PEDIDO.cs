@@ -1,4 +1,4 @@
-namespace ENTIDADES
+﻿namespace ENTIDADES
 {
     // Montos calculados del pedido (los precios ya incluyen IGV)
     public class ENTIDAD_RESUMEN_PEDIDO

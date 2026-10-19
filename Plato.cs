@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-//
-using ENTIDADES;
 using DATOS;
+using ENTIDADES;
 
 namespace RESTAURANTEFINAL
 {
@@ -17,118 +10,106 @@ namespace RESTAURANTEFINAL
     {
         private DATOS_PLATO datosPlato = new DATOS_PLATO();
         private bool esActualizar = false;
+
         public Plato()
         {
             InitializeComponent();
+            Estilo.Aplicar(this);
         }
 
         private void Plato_Load(object sender, EventArgs e)
         {
-            ActualizarTablaPlatos();
             CargarPromociones();
-
+            ActualizarTablaPlatos();
+            LimpiarCampos();
         }
 
         private void btn_plato_guardar_Click(object sender, EventArgs e)
         {
-            if (ValidarCampos())
+            if (!ValidarCampos())
+                return;
+
+            try
             {
-                try
+                ENTIDAD_PLATO plato = new ENTIDAD_PLATO
                 {
-                    ENTIDAD_PLATO plato = new ENTIDAD_PLATO
-                    {
-                        ID_Plato = txt_plato_cod.Text.Trim(),
-                        Nom_Plato = txt_plato_nom.Text.Trim(),
-                        Des_Plato = txt_plato_des.Text.Trim(),
-                        Prec_Original = decimal.Parse(txt_plato_pre.Text.Trim()),
-                        ID_Promocion = cbx_promocion_cod.SelectedValue == DBNull.Value ? null : cbx_promocion_cod.SelectedValue.ToString()
-                    };
+                    ID_Plato = txt_plato_cod.Text.Trim(),
+                    Nom_Plato = txt_plato_nom.Text.Trim(),
+                    Des_Plato = txt_plato_des.Text.Trim(),
+                    Prec_Original = decimal.Parse(txt_plato_pre.Text.Trim()),
+                    ID_Promocion = cbx_promocion_cod.SelectedValue == DBNull.Value ? null : cbx_promocion_cod.SelectedValue.ToString()
+                };
 
-                    if (esActualizar)
-                    {
-                        datosPlato.Modificar_Plato(plato);
-                        MessageBox.Show("Plato modificado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        esActualizar = false;
-                    }
-                    else
-                    {
-                        datosPlato.Agregar_Plato(plato);
-                        MessageBox.Show("Plato guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-
-                    LimpiarCampos();
-                    ActualizarTablaPlatos();
-                }
-                catch (Exception ex)
+                if (esActualizar)
                 {
-                    MessageBox.Show("Error al guardar plato: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    datosPlato.Modificar_Plato(plato);
+                    MessageBox.Show("Plato modificado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                else
+                {
+                    datosPlato.Agregar_Plato(plato);
+                    MessageBox.Show("Plato guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                ActualizarTablaPlatos();
+                LimpiarCampos();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar plato: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_plato_nuevo_Click(object sender, EventArgs e)
+        {
+            LimpiarCampos();
         }
 
         private void btn_plato_eliminar_Click(object sender, EventArgs e)
         {
-            if (dataGridView_Plato.SelectedRows.Count > 0)
-            {
-                string idPlato = dataGridView_Plato.SelectedRows[0].Cells["ID_Plato"].Value.ToString();
-
-                if (MessageBox.Show("¿Está seguro de que desea eliminar este plato?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    try
-                    {
-                        datosPlato.Eliminar_Plato(idPlato);
-                        MessageBox.Show("Plato eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ActualizarTablaPlatos();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error al eliminar plato: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            else
+            if (!esActualizar)
             {
                 MessageBox.Show("Por favor, seleccione un plato para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-        }
-        private void txt_plato_buscar_TextChanged(object sender, EventArgs e)
-        {
+
+            if (MessageBox.Show("¿Está seguro de que desea eliminar este plato?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+
             try
             {
-                string filtro = txt_plato_buscar.Text.Trim();
-
-                if (!string.IsNullOrEmpty(filtro))
-                {
-                    DataTable dtPlatos = datosPlato.Cargar_Plato(); // Método que carga todos los platos
-                    DataView dv = dtPlatos.DefaultView;
-
-                    // Aplica el filtro al campo "Nom_Plato"
-                    dv.RowFilter = $"Nom_Plato LIKE '%{filtro}%'";
-                    dataGridView_Plato.DataSource = dv;
-                }
-                else
-                {
-                    // Si el filtro está vacío, recarga todos los datos
-                    ActualizarTablaPlatos();
-                }
+                datosPlato.Eliminar_Plato(txt_plato_cod.Text);
+                MessageBox.Show("Plato eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ActualizarTablaPlatos();
+                LimpiarCampos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al filtrar los platos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AyudaCRUD.Mostrar_Error_Eliminar(ex);
             }
+        }
+
+        private void txt_plato_buscar_TextChanged(object sender, EventArgs e)
+        {
+            AyudaCRUD.Buscar(dataGridView_Plato, txt_plato_buscar.Text, "ID_Plato", "Nom_Plato", "Des_Plato", "ID_Promocion");
         }
 
         private void dataGridView_Plato_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                esActualizar = true;
-                txt_plato_cod.Text = dataGridView_Plato.Rows[e.RowIndex].Cells["ID_Plato"].Value.ToString();
-                txt_plato_nom.Text = dataGridView_Plato.Rows[e.RowIndex].Cells["Nom_Plato"].Value.ToString();
-                txt_plato_des.Text = dataGridView_Plato.Rows[e.RowIndex].Cells["Des_Plato"].Value.ToString();
-                txt_plato_pre.Text = dataGridView_Plato.Rows[e.RowIndex].Cells["Precio_Original"].Value.ToString();
-                cbx_promocion_cod.SelectedValue = dataGridView_Plato.Rows[e.RowIndex].Cells["ID_Promocion"].Value.ToString();
-            }
+            if (e.RowIndex < 0)
+                return;
+
+            esActualizar = true;
+            DataGridViewRow fila = dataGridView_Plato.Rows[e.RowIndex];
+            txt_plato_cod.Text = fila.Cells["ID_Plato"].Value.ToString();
+            txt_plato_nom.Text = fila.Cells["Nom_Plato"].Value.ToString();
+            txt_plato_des.Text = fila.Cells["Des_Plato"].Value.ToString();
+            txt_plato_pre.Text = fila.Cells["Prec_Original"].Value.ToString();
+            if (fila.Cells["ID_Promocion"].Value == DBNull.Value)
+                cbx_promocion_cod.SelectedIndex = 0;   // "Sin Promoción"
+            else
+                cbx_promocion_cod.SelectedValue = fila.Cells["ID_Promocion"].Value.ToString();
+            btn_plato_guardar.Text = "Actualizar";
         }
 
         private void ActualizarTablaPlatos()
@@ -136,6 +117,9 @@ namespace RESTAURANTEFINAL
             try
             {
                 dataGridView_Plato.DataSource = datosPlato.Cargar_Plato();
+                AyudaCRUD.Encabezados(dataGridView_Plato, "ID_Plato", "Código", "Nom_Plato", "Producto", "Des_Plato", "Descripción",
+                                      "Prec_Original", "Precio (S/)", "ID_Promocion", "Promoción");
+                txt_plato_buscar_TextChanged(null, EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -149,19 +133,15 @@ namespace RESTAURANTEFINAL
             {
                 DataTable dtPromociones = datosPlato.Cargar_Promociones();
 
-                // Crear una nueva fila para "Sin Promoción"
+                // Primera opción: "Sin Promoción"
                 DataRow row = dtPromociones.NewRow();
-                row["ID_Promocion"] = DBNull.Value; // Representa "Sin Promoción"
+                row["ID_Promocion"] = DBNull.Value;
                 row["Nom_Promocion"] = "Sin Promoción";
-
-                // Insertar la fila al inicio del DataTable
                 dtPromociones.Rows.InsertAt(row, 0);
 
-                // Asignar el DataTable al ComboBox
                 cbx_promocion_cod.DataSource = dtPromociones;
                 cbx_promocion_cod.DisplayMember = "Nom_Promocion";
                 cbx_promocion_cod.ValueMember = "ID_Promocion";
-                cbx_promocion_cod.SelectedIndex = 0; // Seleccionar "Sin Promoción" por defecto
             }
             catch (Exception ex)
             {
@@ -169,13 +149,18 @@ namespace RESTAURANTEFINAL
             }
         }
 
+        // Sale del modo edición y genera el siguiente código (D001, D002, ...)
         private void LimpiarCampos()
         {
-            txt_plato_cod.Clear();
+            esActualizar = false;
+            btn_plato_guardar.Text = "Guardar";
             txt_plato_nom.Clear();
             txt_plato_des.Clear();
             txt_plato_pre.Clear();
-            cbx_promocion_cod.SelectedIndex = -1;
+            if (cbx_promocion_cod.Items.Count > 0)
+                cbx_promocion_cod.SelectedIndex = 0;
+            DataTable tabla = dataGridView_Plato.DataSource as DataTable;
+            txt_plato_cod.Text = tabla == null ? "" : AyudaCRUD.Siguiente_Codigo(tabla, "ID_Plato", "D", 3);
         }
 
         private bool ValidarCampos()
@@ -190,23 +175,14 @@ namespace RESTAURANTEFINAL
                 return false;
             }
 
-            if (!decimal.TryParse(txt_plato_pre.Text, out _))
+            decimal precio;
+            if (!decimal.TryParse(txt_plato_pre.Text, out precio) || precio <= 0)
             {
                 MessageBox.Show("Ingrese un precio válido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             return true;
-        }
-
-        private void dataGridView_Plato_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void cbx_promocion_cod_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

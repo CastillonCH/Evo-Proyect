@@ -34,6 +34,7 @@
             this.btn_empleado_eliminar = new System.Windows.Forms.Button();
             this.dataGridView_Empleado = new System.Windows.Forms.DataGridView();
             this.btn_empleado_guardar = new System.Windows.Forms.Button();
+            this.btn_empleado_nuevo = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txt_empleado_email = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -63,7 +64,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 17);
             this.label6.TabIndex = 37;
-            this.label6.Text = "Nombre:";
+            this.label6.Text = "Buscar:";
             // 
             // txt_empleado_buscar
             // 
@@ -76,7 +77,7 @@
             // 
             // btn_empleado_eliminar
             // 
-            this.btn_empleado_eliminar.Location = new System.Drawing.Point(191, 389);
+            this.btn_empleado_eliminar.Location = new System.Drawing.Point(244, 389);
             this.btn_empleado_eliminar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_empleado_eliminar.Name = "btn_empleado_eliminar";
             this.btn_empleado_eliminar.Size = new System.Drawing.Size(100, 30);
@@ -96,9 +97,19 @@
             this.dataGridView_Empleado.TabIndex = 34;
             this.dataGridView_Empleado.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Empleado_CellClick);
             // 
+            // btn_empleado_nuevo
+            // 
+            this.btn_empleado_nuevo.Location = new System.Drawing.Point(24, 389);
+            this.btn_empleado_nuevo.Name = "btn_empleado_nuevo";
+            this.btn_empleado_nuevo.Size = new System.Drawing.Size(100, 30);
+            this.btn_empleado_nuevo.TabIndex = 20;
+            this.btn_empleado_nuevo.Text = "Nuevo";
+            this.btn_empleado_nuevo.UseVisualStyleBackColor = true;
+            this.btn_empleado_nuevo.Click += new System.EventHandler(this.btn_empleado_nuevo_Click);
+            // 
             // btn_empleado_guardar
             // 
-            this.btn_empleado_guardar.Location = new System.Drawing.Point(62, 389);
+            this.btn_empleado_guardar.Location = new System.Drawing.Point(134, 389);
             this.btn_empleado_guardar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_empleado_guardar.Name = "btn_empleado_guardar";
             this.btn_empleado_guardar.Size = new System.Drawing.Size(100, 30);
@@ -114,6 +125,7 @@
             this.groupBox1.Controls.Add(this.btn_empleado_eliminar);
             this.groupBox1.Controls.Add(this.dtp_fecha_contra);
             this.groupBox1.Controls.Add(this.txt_empleado_tel);
+            this.groupBox1.Controls.Add(this.btn_empleado_nuevo);
             this.groupBox1.Controls.Add(this.btn_empleado_guardar);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label1);
@@ -204,6 +216,7 @@
             this.txt_empleado_cod.Location = new System.Drawing.Point(191, 40);
             this.txt_empleado_cod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txt_empleado_cod.Name = "txt_empleado_cod";
+            this.txt_empleado_cod.ReadOnly = true;
             this.txt_empleado_cod.Size = new System.Drawing.Size(132, 23);
             this.txt_empleado_cod.TabIndex = 13;
             // 
@@ -304,6 +317,7 @@
         private System.Windows.Forms.Button btn_empleado_eliminar;
         private System.Windows.Forms.DataGridView dataGridView_Empleado;
         private System.Windows.Forms.Button btn_empleado_guardar;
+        private System.Windows.Forms.Button btn_empleado_nuevo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbx_empleado_cod;

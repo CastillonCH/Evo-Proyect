@@ -1,4 +1,4 @@
-using ENTIDADES;
+﻿using ENTIDADES;
 
 namespace NEGOCIO
 {

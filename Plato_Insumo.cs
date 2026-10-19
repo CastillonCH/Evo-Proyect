@@ -1,126 +1,152 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Forms;
+using DATOS;
+using ENTIDADES;
 
 namespace RESTAURANTEFINAL
 {
+    // Recetas: qué insumos (y cuánto, en la unidad del insumo) lleva cada plato
     public partial class Plato_Insumo : Form
     {
-        private DATOS.DATOS_PLATO_INSUMO datosPlatoInsumo = new DATOS.DATOS_PLATO_INSUMO();
+        private DATOS_PLATO_INSUMO datosPlatoInsumo = new DATOS_PLATO_INSUMO();
+        private bool esActualizar = false;
+
         public Plato_Insumo()
         {
             InitializeComponent();
-        }
-
-        private void btn_plato_insumo_guardar_Click(object sender, EventArgs e)
-        {
-            if (ValidarCampos())
-            {
-                try
-                {
-                    var platoInsumo = new ENTIDADES.ENTIDAD_PLATO_INSUMO
-                    {
-                        ID_Plato = cbx_plato_cod.SelectedValue.ToString(),  // Obtener el valor seleccionado
-                        ID_Insumo = cbx_insumo_cod.SelectedValue.ToString(), // Obtener el valor seleccionado
-                        Cant_Necesaria = LeerCantidad(),  // en la unidad del insumo (ej. 0.25 kg)
-                        Procedimiento = txt_plato_insumo_proc.Text.Trim()
-                    };
-
-                    datosPlatoInsumo.Agregar_PlatoInsumo(platoInsumo);
-                    MessageBox.Show("Plato-Insumo agregado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LimpiarCampos();
-                    ActualizarTablaPlatoInsumo();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al agregar el Plato-Insumo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            Estilo.Aplicar(this);
         }
 
         private void Plato_Insumo_Load(object sender, EventArgs e)
         {
+            CargarPlatosInsumos();
             ActualizarTablaPlatoInsumo();
-            CargarPlatosInsumos(); // Llamada para cargar los ComboBox
+            LimpiarCampos();
+        }
+
+        private void btn_plato_insumo_guardar_Click(object sender, EventArgs e)
+        {
+            if (!ValidarCampos())
+                return;
+
+            try
+            {
+                ENTIDAD_PLATO_INSUMO platoInsumo = new ENTIDAD_PLATO_INSUMO
+                {
+                    ID_Plato = cbx_plato_cod.SelectedValue.ToString(),
+                    ID_Insumo = cbx_insumo_cod.SelectedValue.ToString(),
+                    Cant_Necesaria = LeerCantidad(),   // en la unidad del insumo (ej. 0.25 kg)
+                    Procedimiento = txt_plato_insumo_proc.Text.Trim()
+                };
+
+                if (esActualizar)
+                {
+                    datosPlatoInsumo.Modificar_PlatoInsumo(platoInsumo);
+                    MessageBox.Show("Receta modificada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    datosPlatoInsumo.Agregar_PlatoInsumo(platoInsumo);
+                    MessageBox.Show("Insumo agregado a la receta.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                ActualizarTablaPlatoInsumo();
+                LimpiarCampos();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar la receta: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_plato_insumo_nuevo_Click(object sender, EventArgs e)
+        {
+            LimpiarCampos();
         }
 
         private void btn_plato_insumo_eliminar_Click(object sender, EventArgs e)
         {
-            if (dataGridView_Plato_Insumo.SelectedRows.Count > 0)
+            if (!esActualizar)
             {
-                string idPlato = dataGridView_Plato_Insumo.SelectedRows[0].Cells["ID_Plato"].Value.ToString();
-                string idInsumo = dataGridView_Plato_Insumo.SelectedRows[0].Cells["ID_Insumo"].Value.ToString();
-
-                if (MessageBox.Show("¿Está seguro de que desea eliminar este Plato-Insumo?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    try
-                    {
-                        datosPlatoInsumo.Eliminar_PlatoInsumo(idPlato, idInsumo);
-                        MessageBox.Show("Plato-Insumo eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ActualizarTablaPlatoInsumo();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error al eliminar el Plato-Insumo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                MessageBox.Show("Por favor, seleccione un insumo de la receta para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
+
+            if (MessageBox.Show("¿Está seguro de que desea quitar este insumo de la receta?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+
+            try
             {
-                MessageBox.Show("Por favor, seleccione un Plato-Insumo para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                datosPlatoInsumo.Eliminar_PlatoInsumo(cbx_plato_cod.SelectedValue.ToString(), cbx_insumo_cod.SelectedValue.ToString());
+                MessageBox.Show("Insumo quitado de la receta.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ActualizarTablaPlatoInsumo();
+                LimpiarCampos();
+            }
+            catch (Exception ex)
+            {
+                AyudaCRUD.Mostrar_Error_Eliminar(ex);
             }
         }
 
         private void txt_plato_insumo_buscar_TextChanged(object sender, EventArgs e)
         {
-            string filtro = txt_plato_insumo_buscar.Text.ToLower();
-
-            (dataGridView_Plato_Insumo.DataSource as DataTable).DefaultView.RowFilter = string.Format(
-                "ID_Plato LIKE '%{0}%' OR ID_Insumo LIKE '%{0}%' OR Procedimiento LIKE '%{0}%'",
-                filtro);
+            AyudaCRUD.Buscar(dataGridView_Plato_Insumo, txt_plato_insumo_buscar.Text,
+                             "ID_Plato", "Nom_Plato", "ID_Insumo", "Nom_Insumo", "Procedimiento");
         }
 
         private void dataGridView_Plato_Insumo_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                // Obtener los valores de la fila seleccionada
-                DataGridViewRow row = dataGridView_Plato_Insumo.Rows[e.RowIndex];
-                cbx_plato_cod.Text = row.Cells["ID_Plato"].Value.ToString();
-                cbx_insumo_cod.Text = row.Cells["ID_Insumo"].Value.ToString();
-                txt_plato_insumo_cant.Text = row.Cells["Cant_Necesaria"].Value.ToString();
-                txt_plato_insumo_proc.Text = row.Cells["Procedimiento"].Value.ToString();
-            }
+            if (e.RowIndex < 0)
+                return;
+
+            // Modo edición: plato e insumo son la clave, no se pueden cambiar
+            esActualizar = true;
+            DataGridViewRow fila = dataGridView_Plato_Insumo.Rows[e.RowIndex];
+            cbx_plato_cod.SelectedValue = fila.Cells["ID_Plato"].Value.ToString();
+            cbx_insumo_cod.SelectedValue = fila.Cells["ID_Insumo"].Value.ToString();
+            txt_plato_insumo_cant.Text = fila.Cells["Cant_Necesaria"].Value == DBNull.Value ? ""
+                : Convert.ToDecimal(fila.Cells["Cant_Necesaria"].Value).ToString("0.###", CultureInfo.InvariantCulture);
+            txt_plato_insumo_proc.Text = fila.Cells["Procedimiento"].Value.ToString();
+            cbx_plato_cod.Enabled = false;
+            cbx_insumo_cod.Enabled = false;
+            btn_plato_insumo_guardar.Text = "Actualizar";
         }
-        // Función para actualizar el DataGridView con los datos de Plato-Insumo
+
         private void ActualizarTablaPlatoInsumo()
         {
             try
             {
                 dataGridView_Plato_Insumo.DataSource = datosPlatoInsumo.Cargar_PlatoInsumo();
+                AyudaCRUD.Encabezados(dataGridView_Plato_Insumo, "ID_Plato", "Cód. plato", "Nom_Plato", "Plato",
+                                      "ID_Insumo", "Cód. insumo", "Nom_Insumo", "Insumo", "Cant_Necesaria", "Cantidad",
+                                      "Unidad", "Unidad", "Procedimiento", "Procedimiento");
+                txt_plato_insumo_buscar_TextChanged(null, EventArgs.Empty);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los Plato-Insumo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar las recetas: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // Función para validar que todos los campos están llenos
         private bool ValidarCampos()
         {
-            if (LeerCantidad() <= 0)
+            if (cbx_plato_cod.SelectedIndex == -1 || cbx_insumo_cod.SelectedIndex == -1 ||
+                string.IsNullOrWhiteSpace(txt_plato_insumo_proc.Text))
             {
-                MessageBox.Show("Ingrese una cantidad numérica mayor a cero (ej. 0.25).", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Complete todos los campos obligatorios.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            return !string.IsNullOrEmpty(txt_plato_insumo_proc.Text) &&
-                   cbx_plato_cod.SelectedIndex != -1 && cbx_insumo_cod.SelectedIndex != -1;
+
+            if (LeerCantidad() <= 0)
+            {
+                MessageBox.Show("Ingrese una cantidad numérica mayor a cero, en la unidad del insumo (ej. 0.25 kg).",
+                                "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
         }
 
         // Acepta punto o coma decimal; devuelve 0 si el texto no es un número
@@ -128,39 +154,36 @@ namespace RESTAURANTEFINAL
         {
             decimal cantidad;
             string texto = txt_plato_insumo_cant.Text.Trim().Replace(',', '.');
-            return decimal.TryParse(texto, System.Globalization.NumberStyles.Number,
-                                    System.Globalization.CultureInfo.InvariantCulture, out cantidad) ? cantidad : 0m;
+            return decimal.TryParse(texto, NumberStyles.Number, CultureInfo.InvariantCulture, out cantidad) ? cantidad : 0m;
         }
 
-        // Función para limpiar los campos del formulario
         private void LimpiarCampos()
         {
-           
+            esActualizar = false;
+            btn_plato_insumo_guardar.Text = "Guardar";
+            cbx_plato_cod.Enabled = true;
+            cbx_insumo_cod.Enabled = true;
             txt_plato_insumo_cant.Clear();
             txt_plato_insumo_proc.Clear();
             cbx_plato_cod.SelectedIndex = -1;
             cbx_insumo_cod.SelectedIndex = -1;
         }
-        // Función para cargar los ComboBox de Platos e Insumos
+
         private void CargarPlatosInsumos()
         {
             try
             {
-                // Cargar los platos
-                DataTable dtPlatos = datosPlatoInsumo.CargarPlatos();
-                cbx_plato_cod.DisplayMember = "Nom_Plato";  // Columna a mostrar
-                cbx_plato_cod.ValueMember = "ID_Plato";        // Columna que contiene el valor
-                cbx_plato_cod.DataSource = dtPlatos;
+                cbx_plato_cod.DisplayMember = "Nom_Plato";
+                cbx_plato_cod.ValueMember = "ID_Plato";
+                cbx_plato_cod.DataSource = datosPlatoInsumo.CargarPlatos();
 
-                // Cargar los insumos
-                DataTable dtInsumos = datosPlatoInsumo.CargarInsumos();
-                cbx_insumo_cod.DisplayMember = "Nombre";  // Columna a mostrar
-                cbx_insumo_cod.ValueMember = "ID_Insumo";        // Columna que contiene el valor
-                cbx_insumo_cod.DataSource = dtInsumos;
+                cbx_insumo_cod.DisplayMember = "Nombre";
+                cbx_insumo_cod.ValueMember = "ID_Insumo";
+                cbx_insumo_cod.DataSource = datosPlatoInsumo.CargarInsumos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los ComboBox de Platos e Insumos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar platos e insumos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -34,6 +34,7 @@
             this.btn_plato_insumo_eliminar = new System.Windows.Forms.Button();
             this.dataGridView_Plato_Insumo = new System.Windows.Forms.DataGridView();
             this.btn_plato_insumo_guardar = new System.Windows.Forms.Button();
+            this.btn_plato_insumo_nuevo = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txt_plato_insumo_proc = new System.Windows.Forms.RichTextBox();
             this.cbx_plato_cod = new System.Windows.Forms.ComboBox();
@@ -57,7 +58,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(59, 16);
             this.label6.TabIndex = 37;
-            this.label6.Text = "Nombre:";
+            this.label6.Text = "Buscar:";
             // 
             // txt_plato_insumo_buscar
             // 
@@ -70,7 +71,7 @@
             // 
             // btn_plato_insumo_eliminar
             // 
-            this.btn_plato_insumo_eliminar.Location = new System.Drawing.Point(172, 367);
+            this.btn_plato_insumo_eliminar.Location = new System.Drawing.Point(227, 367);
             this.btn_plato_insumo_eliminar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_plato_insumo_eliminar.Name = "btn_plato_insumo_eliminar";
             this.btn_plato_insumo_eliminar.Size = new System.Drawing.Size(100, 28);
@@ -90,9 +91,19 @@
             this.dataGridView_Plato_Insumo.TabIndex = 34;
             this.dataGridView_Plato_Insumo.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Plato_Insumo_CellClick);
             // 
+            // btn_plato_insumo_nuevo
+            // 
+            this.btn_plato_insumo_nuevo.Location = new System.Drawing.Point(7, 367);
+            this.btn_plato_insumo_nuevo.Name = "btn_plato_insumo_nuevo";
+            this.btn_plato_insumo_nuevo.Size = new System.Drawing.Size(100, 28);
+            this.btn_plato_insumo_nuevo.TabIndex = 20;
+            this.btn_plato_insumo_nuevo.Text = "Nuevo";
+            this.btn_plato_insumo_nuevo.UseVisualStyleBackColor = true;
+            this.btn_plato_insumo_nuevo.Click += new System.EventHandler(this.btn_plato_insumo_nuevo_Click);
+            // 
             // btn_plato_insumo_guardar
             // 
-            this.btn_plato_insumo_guardar.Location = new System.Drawing.Point(44, 367);
+            this.btn_plato_insumo_guardar.Location = new System.Drawing.Point(117, 367);
             this.btn_plato_insumo_guardar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_plato_insumo_guardar.Name = "btn_plato_insumo_guardar";
             this.btn_plato_insumo_guardar.Size = new System.Drawing.Size(100, 28);
@@ -108,6 +119,7 @@
             this.groupBox1.Controls.Add(this.btn_plato_insumo_eliminar);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.cbx_insumo_cod);
+            this.groupBox1.Controls.Add(this.btn_plato_insumo_nuevo);
             this.groupBox1.Controls.Add(this.btn_plato_insumo_guardar);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label3);
@@ -237,6 +249,7 @@
         private System.Windows.Forms.Button btn_plato_insumo_eliminar;
         private System.Windows.Forms.DataGridView dataGridView_Plato_Insumo;
         private System.Windows.Forms.Button btn_plato_insumo_guardar;
+        private System.Windows.Forms.Button btn_plato_insumo_nuevo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbx_insumo_cod;

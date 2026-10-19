@@ -1,4 +1,4 @@
-namespace ENTIDADES
+﻿namespace ENTIDADES
 {
     // Cuánto de un insumo necesita un pedido y cuánto hay en la sede
     public class ENTIDAD_CONSUMO_INSUMO

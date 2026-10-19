@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-//
-using ENTIDADES;
 using DATOS;
+using ENTIDADES;
 
 namespace RESTAURANTEFINAL
 {
@@ -21,113 +14,98 @@ namespace RESTAURANTEFINAL
         public Promocion()
         {
             InitializeComponent();
+            Estilo.Aplicar(this);
         }
 
         private void Promocion_Load(object sender, EventArgs e)
         {
             ActualizarTablaPromociones();
+            LimpiarCampos();
         }
 
         private void btn_promocion_guardar_Click(object sender, EventArgs e)
         {
-            if (ValidarCampos())
+            if (!ValidarCampos())
+                return;
+
+            try
             {
-                try
+                ENTIDAD_PROMOCION promocion = new ENTIDAD_PROMOCION
                 {
-                    ENTIDAD_PROMOCION promocion = new ENTIDAD_PROMOCION
-                    {
-                        ID_Promocion = txt_promocion_cod.Text.Trim(),
-                        Nom_Promocion = txt_promocion_nom.Text.Trim(),
-                        Fec_Inicio = date_promocion_inicio.Value,
-                        Fec_Fin = date_promocion_fin.Value,
-                        Descuento = decimal.Parse(txt_promocion_desc.Text.Trim())
-                    };
+                    ID_Promocion = txt_promocion_cod.Text.Trim(),
+                    Nom_Promocion = txt_promocion_nom.Text.Trim(),
+                    Fec_Inicio = date_promocion_inicio.Value.Date,
+                    Fec_Fin = date_promocion_fin.Value.Date,
+                    Descuento = decimal.Parse(txt_promocion_desc.Text.Trim())
+                };
 
-                    if (esActualizar)
-                    {
-                        datosPromocion.Modificar_Promocion(promocion);
-                        MessageBox.Show("Promoción modificada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        esActualizar = false;
-                    }
-                    else
-                    {
-                        datosPromocion.Agregar_Promocion(promocion);
-                        MessageBox.Show("Promoción guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-
-                    LimpiarCampos();
-                    ActualizarTablaPromociones();
-                }
-                catch (Exception ex)
+                if (esActualizar)
                 {
-                    MessageBox.Show("Error al guardar promoción: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    datosPromocion.Modificar_Promocion(promocion);
+                    MessageBox.Show("Promoción modificada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                else
+                {
+                    datosPromocion.Agregar_Promocion(promocion);
+                    MessageBox.Show("Promoción guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                ActualizarTablaPromociones();
+                LimpiarCampos();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar promoción: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_promocion_nuevo_Click(object sender, EventArgs e)
+        {
+            LimpiarCampos();
         }
 
         private void btn_promocion_eliminar_Click(object sender, EventArgs e)
         {
-            if (dataGridView_Promocion.SelectedRows.Count > 0)
-            {
-                string idPromocion = dataGridView_Promocion.SelectedRows[0].Cells["ID_Promocion"].Value.ToString();
-
-                if (MessageBox.Show("¿Está seguro de que desea eliminar esta promoción?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    try
-                    {
-                        datosPromocion.Eliminar_Promocion(idPromocion);
-                        MessageBox.Show("Promoción eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ActualizarTablaPromociones();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error al eliminar promoción: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            else
+            if (!esActualizar)
             {
                 MessageBox.Show("Por favor, seleccione una promoción para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (MessageBox.Show("¿Está seguro de que desea eliminar esta promoción?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+
+            try
+            {
+                datosPromocion.Eliminar_Promocion(txt_promocion_cod.Text);
+                MessageBox.Show("Promoción eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ActualizarTablaPromociones();
+                LimpiarCampos();
+            }
+            catch (Exception ex)
+            {
+                AyudaCRUD.Mostrar_Error_Eliminar(ex);
             }
         }
 
         private void txt_promocion_buscar_TextChanged(object sender, EventArgs e)
         {
-            try
-            {
-                string filtro = txt_promocion_buscar.Text.Trim();
-
-                if (!string.IsNullOrEmpty(filtro))
-                {
-                    DataTable dtPromociones = datosPromocion.Cargar_Promocion();
-                    DataView dv = dtPromociones.DefaultView;
-                    dv.RowFilter = $"Nom_Promocion LIKE '%{filtro}%'";
-                    dataGridView_Promocion.DataSource = dv;
-                }
-                else
-                {
-                    ActualizarTablaPromociones();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al filtrar promociones: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            AyudaCRUD.Buscar(dataGridView_Promocion, txt_promocion_buscar.Text, "ID_Promocion", "Nom_Promocion", "Descuento");
         }
 
         private void dataGridView_Promocion_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                esActualizar = true;
-                txt_promocion_cod.Text = dataGridView_Promocion.Rows[e.RowIndex].Cells["ID_Promocion"].Value.ToString();
-                txt_promocion_nom.Text = dataGridView_Promocion.Rows[e.RowIndex].Cells["Nom_Promocion"].Value.ToString();
-                date_promocion_inicio.Value = DateTime.Parse(dataGridView_Promocion.Rows[e.RowIndex].Cells["Fec_Inicio"].Value.ToString());
-                date_promocion_fin.Value = DateTime.Parse(dataGridView_Promocion.Rows[e.RowIndex].Cells["Fec_Fin"].Value.ToString());
-                txt_promocion_desc.Text = dataGridView_Promocion.Rows[e.RowIndex].Cells["Descuento"].Value.ToString();
+            if (e.RowIndex < 0)
+                return;
 
-                MessageBox.Show("Modo de edición activado. Modifique los datos y presione 'Guardar' para actualizar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            esActualizar = true;
+            DataGridViewRow fila = dataGridView_Promocion.Rows[e.RowIndex];
+            txt_promocion_cod.Text = fila.Cells["ID_Promocion"].Value.ToString();
+            txt_promocion_nom.Text = fila.Cells["Nom_Promocion"].Value.ToString();
+            date_promocion_inicio.Value = Convert.ToDateTime(fila.Cells["Fec_Inicio"].Value);
+            date_promocion_fin.Value = Convert.ToDateTime(fila.Cells["Fec_Fin"].Value);
+            txt_promocion_desc.Text = fila.Cells["Descuento"].Value.ToString();
+            btn_promocion_guardar.Text = "Actualizar";
         }
 
         private void ActualizarTablaPromociones()
@@ -135,6 +113,9 @@ namespace RESTAURANTEFINAL
             try
             {
                 dataGridView_Promocion.DataSource = datosPromocion.Cargar_Promocion();
+                AyudaCRUD.Encabezados(dataGridView_Promocion, "ID_Promocion", "Código", "Nom_Promocion", "Promoción",
+                                      "Fec_Inicio", "Inicio", "Fec_Fin", "Fin", "Descuento", "Descuento (%)");
+                txt_promocion_buscar_TextChanged(null, EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -142,13 +123,17 @@ namespace RESTAURANTEFINAL
             }
         }
 
+        // Sale del modo edición y genera el siguiente código (P001, P002, ...)
         private void LimpiarCampos()
         {
-            txt_promocion_cod.Clear();
+            esActualizar = false;
+            btn_promocion_guardar.Text = "Guardar";
             txt_promocion_nom.Clear();
             txt_promocion_desc.Clear();
-            date_promocion_inicio.Value = DateTime.Now;
-            date_promocion_fin.Value = DateTime.Now;
+            date_promocion_inicio.Value = DateTime.Today;
+            date_promocion_fin.Value = DateTime.Today;
+            DataTable tabla = dataGridView_Promocion.DataSource as DataTable;
+            txt_promocion_cod.Text = tabla == null ? "" : AyudaCRUD.Siguiente_Codigo(tabla, "ID_Promocion", "P", 3);
         }
 
         private bool ValidarCampos()
@@ -161,15 +146,20 @@ namespace RESTAURANTEFINAL
                 return false;
             }
 
-            if (!decimal.TryParse(txt_promocion_desc.Text, out _))
+            decimal descuento;
+            if (!decimal.TryParse(txt_promocion_desc.Text, out descuento) || descuento <= 0 || descuento > 100)
             {
-                MessageBox.Show("Ingrese un descuento válido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ingrese un descuento entre 0 y 100 (%).", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (date_promocion_fin.Value.Date < date_promocion_inicio.Value.Date)
+            {
+                MessageBox.Show("La fecha de fin no puede ser anterior a la de inicio.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             return true;
         }
-
-      
     }
 }

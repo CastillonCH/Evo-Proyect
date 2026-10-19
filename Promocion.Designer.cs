@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Promocion));
             this.btn_promocion_guardar = new System.Windows.Forms.Button();
+            this.btn_promocion_nuevo = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.date_promocion_fin = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,9 +52,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
+            // btn_promocion_nuevo
+            // 
+            this.btn_promocion_nuevo.Location = new System.Drawing.Point(18, 292);
+            this.btn_promocion_nuevo.Name = "btn_promocion_nuevo";
+            this.btn_promocion_nuevo.Size = new System.Drawing.Size(100, 28);
+            this.btn_promocion_nuevo.TabIndex = 20;
+            this.btn_promocion_nuevo.Text = "Nuevo";
+            this.btn_promocion_nuevo.UseVisualStyleBackColor = true;
+            this.btn_promocion_nuevo.Click += new System.EventHandler(this.btn_promocion_nuevo_Click);
+            // 
             // btn_promocion_guardar
             // 
-            this.btn_promocion_guardar.Location = new System.Drawing.Point(69, 292);
+            this.btn_promocion_guardar.Location = new System.Drawing.Point(128, 292);
             this.btn_promocion_guardar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_promocion_guardar.Name = "btn_promocion_guardar";
             this.btn_promocion_guardar.Size = new System.Drawing.Size(100, 28);
@@ -69,6 +80,7 @@
             this.groupBox1.Controls.Add(this.btn_promocion_eliminar);
             this.groupBox1.Controls.Add(this.date_promocion_inicio);
             this.groupBox1.Controls.Add(this.txt_promocion_desc);
+            this.groupBox1.Controls.Add(this.btn_promocion_nuevo);
             this.groupBox1.Controls.Add(this.btn_promocion_guardar);
             this.groupBox1.Controls.Add(this.txt_promocion_cod);
             this.groupBox1.Controls.Add(this.label2);
@@ -126,6 +138,7 @@
             this.txt_promocion_cod.Location = new System.Drawing.Point(181, 37);
             this.txt_promocion_cod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txt_promocion_cod.Name = "txt_promocion_cod";
+            this.txt_promocion_cod.ReadOnly = true;
             this.txt_promocion_cod.Size = new System.Drawing.Size(132, 22);
             this.txt_promocion_cod.TabIndex = 13;
             // 
@@ -185,7 +198,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 16);
             this.label4.TabIndex = 38;
-            this.label4.Text = "Nombre:";
+            this.label4.Text = "Buscar:";
             // 
             // txt_promocion_buscar
             // 
@@ -198,7 +211,7 @@
             // 
             // btn_promocion_eliminar
             // 
-            this.btn_promocion_eliminar.Location = new System.Drawing.Point(213, 292);
+            this.btn_promocion_eliminar.Location = new System.Drawing.Point(238, 292);
             this.btn_promocion_eliminar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_promocion_eliminar.Name = "btn_promocion_eliminar";
             this.btn_promocion_eliminar.Size = new System.Drawing.Size(100, 28);
@@ -216,6 +229,7 @@
             this.dataGridView_Promocion.RowHeadersWidth = 51;
             this.dataGridView_Promocion.Size = new System.Drawing.Size(513, 358);
             this.dataGridView_Promocion.TabIndex = 35;
+            this.dataGridView_Promocion.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Promocion_CellClick);
             // 
             // pictureBox1
             // 
@@ -253,6 +267,7 @@
         #endregion
 
         private System.Windows.Forms.Button btn_promocion_guardar;
+        private System.Windows.Forms.Button btn_promocion_nuevo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txt_promocion_desc;

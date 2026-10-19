@@ -96,7 +96,13 @@ namespace DATOS
         // Método para cargar todos los Plato-Insumos
         public DataTable Cargar_PlatoInsumo()
         {
-            string query = "SELECT ID_Plato, ID_Insumo, Cant_Necesaria, Procedimiento FROM Plato_Insumo";
+            string query = "SELECT pi.ID_Plato, p.Nom_Plato, pi.ID_Insumo, i.Nombre AS Nom_Insumo, pi.Cant_Necesaria, " +
+                           "um.Nom_Unidad_Medida AS Unidad, pi.Procedimiento " +
+                           "FROM Plato_Insumo pi " +
+                           "INNER JOIN Plato p ON pi.ID_Plato = p.ID_Plato " +
+                           "INNER JOIN Insumo i ON pi.ID_Insumo = i.ID_Insumo " +
+                           "LEFT JOIN Unidad_Medida um ON i.ID_Unidad_Medida = um.ID_Unidad_Medida " +
+                           "ORDER BY pi.ID_Plato, pi.ID_Insumo";
 
             try
             {
