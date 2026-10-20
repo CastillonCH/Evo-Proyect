@@ -48,24 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AyudaCRUD.cs" />
-    <Compile Include="Cliente.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Cliente.Designer.cs">
-      <DependentUpon>Cliente.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Detalle_Pedido.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Detalle_Pedido.Designer.cs">
-      <DependentUpon>Detalle_Pedido.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Empleado.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Empleado.Designer.cs">
-      <DependentUpon>Empleado.cs</DependentUpon>
-    </Compile>
     <Compile Include="Estilo.cs" />
     <Compile Include="FabricaServicios.cs" />
     <Compile Include="FrmCaja.cs">
@@ -110,65 +92,8 @@
     <Compile Include="FrmReportes.Designer.cs">
       <DependentUpon>FrmReportes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Insumo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Insumo.Designer.cs">
-      <DependentUpon>Insumo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Pedido.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Pedido.Designer.cs">
-      <DependentUpon>Pedido.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Plato.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Plato.Designer.cs">
-      <DependentUpon>Plato.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Plato_Insumo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Plato_Insumo.Designer.cs">
-      <DependentUpon>Plato_Insumo.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="Promocion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Promocion.Designer.cs">
-      <DependentUpon>Promocion.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rol.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Rol.Designer.cs">
-      <DependentUpon>Rol.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Sede.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Sede.Designer.cs">
-      <DependentUpon>Sede.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Venta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Venta.Designer.cs">
-      <DependentUpon>Venta.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Cliente.resx">
-      <DependentUpon>Cliente.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Detalle_Pedido.resx">
-      <DependentUpon>Detalle_Pedido.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Empleado.resx">
-      <DependentUpon>Empleado.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FrmCaja.resx">
       <DependentUpon>FrmCaja.cs</DependentUpon>
     </EmbeddedResource>
@@ -190,21 +115,6 @@
     <EmbeddedResource Include="FrmReportes.resx">
       <DependentUpon>FrmReportes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Insumo.resx">
-      <DependentUpon>Insumo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Pedido.resx">
-      <DependentUpon>Pedido.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Plato.resx">
-      <DependentUpon>Plato.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Plato_Insumo.resx">
-      <DependentUpon>Plato_Insumo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Promocion.resx">
-      <DependentUpon>Promocion.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -214,15 +124,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Rol.resx">
-      <DependentUpon>Rol.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Sede.resx">
-      <DependentUpon>Sede.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Venta.resx">
-      <DependentUpon>Venta.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
